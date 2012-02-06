@@ -1,0 +1,4 @@
+libc.so
+bin/*.o
+*.swp
+src/*.c~
