@@ -4,7 +4,7 @@ CFLAGS= -Wall -Werror -ansi -fPIC -D_GNU_SOURCE
 EXEC=libc.so
 all: $(EXEC)
 
-$(EXEC): $(BINDIR)/alloc.o
+$(EXEC): $(BINDIR)/alloc.o $(BINDIR)/open.o
 	gcc -o $@ $^ -shared -ldl
 
 $(BINDIR)/%.o: $(SRCDIR)/%.c
