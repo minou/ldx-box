@@ -1,23 +1,26 @@
 SRCDIR		= src
 
 CC      	= gcc
-CFLAGS		= -Wall -Werror -ansi -fPIC -I../iniparser/src -D_GNU_SOURCE
-LFLAGS  	= -L../iniparser -liniparser -shared -ldl -D_GNU_SOURCE
-#LDSHFLAGS	= -shared -D_GNU_SOURCE
+CFLAGS		= -W -Wall -Werror -ansi
+LDFLAGS		= -fPIC -Iiniparser/src -D_GNU_SOURCE
+LDSHFLAGS	= -shared -Liniparser -liniparser
 
-EXEC		= libtest.so
-
-SRC = $(wildcard $(SRCDIR)/*.c)
-OBJ = $(SRC:.c=.o)
-
+EXEC		= libdx.so
+SRC 		= $(wildcard $(SRCDIR)/*.c)
+OBJ 		= $(SRC:.c=.o)
 
 default: all
 
 all: $(EXEC)
 
 $(EXEC): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ $(LFLAGS)
+	$(CC) -o $@ $^ $(LDSHFLAGS)
+
+%.o: %.c
+	$(CC) -o $@ -c $< $(CFLAGS) $(LDFLAGS)
 
 clean:
-	rm $(OBJ)
-	rm $(EXEC)
+	@rm $(OBJ)
+
+mrproper: clean
+	@rm $(EXEC)
