@@ -3,7 +3,7 @@ SRCDIR		= src
 CC      	= gcc
 CFLAGS		= -W -Wall -Werror -ansi
 LDFLAGS		= -fPIC -Iiniparser/src -D_GNU_SOURCE
-LDSHFLAGS	= -shared -Liniparser -liniparser
+LDSHFLAGS	= -shared -ldl -Liniparser -liniparser
 
 EXEC		= libdx.so
 SRC 		= $(wildcard $(SRCDIR)/*.c)
