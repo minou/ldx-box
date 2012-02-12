@@ -1,20 +1,23 @@
-SRCDIR=src
-BINDIR=bin
-CFLAGS= -Wall -Werror -ansi -fPIC -D_GNU_SOURCE
-EXEC=libc.so
+SRCDIR		= src
+
+CC      	= gcc
+CFLAGS		= -Wall -Werror -ansi -fPIC -I../iniparser/src -D_GNU_SOURCE
+LFLAGS  	= -L../iniparser -liniparser -shared -ldl -D_GNU_SOURCE
+#LDSHFLAGS	= -shared -D_GNU_SOURCE
+
+EXEC		= libtest.so
+
+SRC = $(wildcard $(SRCDIR)/*.c)
+OBJ = $(SRC:.c=.o)
+
+
+default: all
+
 all: $(EXEC)
 
-SRC=$(wildcard $(SRCDIR)/*.c)
-OBJ=$(SRC:.c=.o)
-
 $(EXEC): $(OBJ)
-	gcc -o $@ $^ -shared -ldl
-
-$(BINDIR)/%.o: $(SRCDIR)/%.c
-	gcc -o $@ -c $< $(CFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LFLAGS)
 
 clean:
-	rm -rf $(BINDIR)
-
-mrproper: clean
+	rm $(OBJ)
 	rm $(EXEC)
