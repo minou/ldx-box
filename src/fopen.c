@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <dlfcn.h>
-
-#include "iniparser.h"
+#include "ldx-box.h"
 
 FILE *fopen(const char *path, const char *mode) {
     static FILE *(*sys_fopen)(const char *, const char *) = NULL;
@@ -13,15 +11,10 @@ FILE *fopen(const char *path, const char *mode) {
         }
     }
 
-    dictionary * ini;
-    char       * ini_name;
-    char * paths;
-    ini_name = "config.ini";
-    ini = iniparser_load(ini_name);
-    printf("%s\n", mode);
-    paths = iniparser_getstring(ini, "fopen:mode_r", NULL);
-    printf("%s\n", paths);
+    char * mode_r;
+    mode_r = iniparser_getstring(ini, "fopen:mode_r", NULL);
+    printf("%s\n", mode_r);
     
-    printf("fopen(%s)\n", path);
+    printf("fopen(%s, %s)\n", path, mode);
     return sys_fopen(path, mode);
 }

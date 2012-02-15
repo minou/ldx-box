@@ -8,8 +8,7 @@ LDSHFLAGS	= -shared -Liniparser -liniparser
 EXEC		= libdx.so
 SRC 		= $(wildcard $(SRCDIR)/*.c)
 OBJ 		= $(SRC:.c=.o)
-
-default: all
+CONFIG		= config.ini
 
 all: $(EXEC)
 
@@ -17,7 +16,7 @@ $(EXEC): $(OBJ)
 	$(CC) -o $@ $^ $(LDSHFLAGS)
 
 %.o: %.c
-	$(CC) -o $@ -c $< $(CFLAGS) $(LDFLAGS)
+	$(CC) -o $@ -c $< -D CONFIG $(CFLAGS) $(LDFLAGS)
 
 clean:
 	@rm $(OBJ)
