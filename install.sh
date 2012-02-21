@@ -7,5 +7,7 @@ then
     git clone $address
 fi
 
-cd $repository
+cd $repository/src
+patch -p0 < ../../fix-fopen.patch
+cd ..
 make

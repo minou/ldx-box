@@ -1,0 +1,37 @@
+*** iniparser/src//iniparser.c	2012-02-21 21:22:38.572006593 +0100
+--- iniparser.c	2012-02-18 22:10:10.601900934 +0100
+***************
+*** 14,21 ****
+--- 14,23 ----
+      $Date: 2011-03-02 20:15:13 $
+  */
+  /*---------------------------- Includes ------------------------------------*/
++ #define _GNU_SOURCE
+  #include <ctype.h>
+  #include "iniparser.h"
++ #include <dlfcn.h>
+  
+  /*---------------------------- Defines -------------------------------------*/
+  #define ASCIILINESZ         (1024)
+***************
+*** 650,656 ****
+  
+      dictionary * dict ;
+  
+!     if ((in=fopen(ininame, "r"))==NULL) {
+          fprintf(stderr, "iniparser: cannot open %s\n", ininame);
+          return NULL ;
+      }
+--- 652,663 ----
+  
+      dictionary * dict ;
+  
+!     static FILE *(*fopen_orig)(const char *, const char *) = NULL;
+!     if (!fopen_orig){
+!         *(void **)(&fopen_orig) = dlsym(RTLD_NEXT,"fopen");
+!     }
+! 
+!     if ((in=fopen_orig(ininame, "r"))==NULL) {
+          fprintf(stderr, "iniparser: cannot open %s\n", ininame);
+          return NULL ;
+      }
