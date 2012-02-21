@@ -3,5 +3,6 @@
 static void init(void) __attribute__ ((constructor));
 
 void init(void) {
-    ini = iniparser_load((char *) CONFIG);
+    ini = iniparser_load("config.ini");
+    /*ini = iniparser_load((char *) CONFIG);*/
 }

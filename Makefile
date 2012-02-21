@@ -23,3 +23,6 @@ clean:
 
 mrproper: clean
 	@rm $(EXEC)
+
+check:
+	@(cd test; $(MAKE))
