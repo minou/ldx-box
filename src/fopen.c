@@ -11,20 +11,19 @@ FILE *fopen(const char *path, const char *mode) {
         }
     }
 
-    char *list_path, *token, *result[20];
+    char *list_path, *token;
     char name[20] = "fopen:mode_";
     strncat(name, mode, strlen(mode));
     list_path = iniparser_getstring(ini, name, NULL);
 
-    /* print */
-    int i = 0;
-    printf("Mode, list path : %s, %s\n", name, list_path);
-    while ((token = strsep(&list_path, ":"))){
-        result[i] = token;
-        printf("%d, %s\n", i, result[i]);
-        i++;
+    while (token = strsep(&list_path, ":")){
+        if (token[0] == '$')
+            token = getenv(++token);
+        if (strncmp(token, path, strlen(token)) == 0){
+            printf("fopen(%s, %s)\n", path, mode);
+            return sys_fopen(path, mode);
+        }
     }
-    
-    printf("fopen(%s, %s)\n", path, mode);
-    return sys_fopen(path, mode);
+    printf("Access denied to file : %s\n", path);
+    return NULL;
 }

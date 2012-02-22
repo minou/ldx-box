@@ -6,7 +6,7 @@ int main(int argc, char ** argv)
     file = fopen(argv[1], argv[2]);
     if (file == NULL)
     {
-        perror("Open file");
+        perror("Error fopen");
         return 1;
     }
     printf("Open file %s, mode %s\n", argv[1], argv[2]);
