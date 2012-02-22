@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "ldx-box.h"
+#include <stdlib.h>
 
 FILE *fopen(const char *path, const char *mode) {
     static FILE *(*sys_fopen)(const char *, const char *) = NULL;
@@ -10,15 +11,19 @@ FILE *fopen(const char *path, const char *mode) {
         }
     }
 
-    if (ini==NULL)
-        exit(1);
-
-    char name[12] = "fopen:mode_";
-    char *list_path;
-    strncat(name, mode, 1);
-    printf("Name : %s\n", name);
+    char *list_path, *token, *result[20];
+    char name[20] = "fopen:mode_";
+    strncat(name, mode, strlen(mode));
     list_path = iniparser_getstring(ini, name, NULL);
-    printf("List path : %s\n", list_path);
+
+    /* print */
+    int i = 0;
+    printf("Mode, list path : %s, %s\n", name, list_path);
+    while ((token = strsep(&list_path, ":"))){
+        result[i] = token;
+        printf("%d, %s\n", i, result[i]);
+        i++;
+    }
     
     printf("fopen(%s, %s)\n", path, mode);
     return sys_fopen(path, mode);
