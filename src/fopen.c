@@ -16,9 +16,9 @@ FILE *fopen(const char *path, const char *mode) {
     list_path = iniparser_getstring(ini, name, NULL);
 
     if (check(path, &list_path, ":")){
-        printf("fopen(%s, %s)\n", path, mode);
+        /*printf("fopen(%s, %s)\n", path, mode);*/
         return sys_fopen(path, mode);
     }
-    printf("Access denied to file : %s\n", path);
+    /*printf("Access denied to file : %s\n", path);*/
     return NULL;
 }

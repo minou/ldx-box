@@ -14,9 +14,9 @@ int remove(const char *pathname){
     list_path = iniparser_getstring(ini, "remove:path", NULL);
 
     if (check(pathname, &list_path, ":")){
-        printf("remove(%s)\n", pathname);
+        /*printf("remove(%s)\n", pathname);*/
         return sys_remove(pathname);
     }
-    printf("Access denied to file : %s\n", pathname);
+    /*printf("Access denied to file : %s\n", pathname);*/
     return -1;
 }

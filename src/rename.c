@@ -14,10 +14,9 @@ int rename(const char *oldpath, const char *newpath) {
     src_list = iniparser_getstring(ini, "rename:src", NULL);
     dest_list = iniparser_getstring(ini, "rename:dest", NULL);
 
-    if (check(oldpath, &src_list, ":") && check(newpath, &dest_list, ":")){
-        printf("rename(%s, %s)\n", oldpath, newpath);
+    if (check(oldpath, &src_list, ":") && check(newpath, &dest_list, ":"))
+        /*printf("rename(%s, %s)\n", oldpath, newpath);*/
         return sys_rename(oldpath, newpath);
-    }
-    printf("Access denied to file : %s or %s\n", oldpath, newpath);
+    /*printf("Access denied to file : %s or %s\n", oldpath, newpath);*/
     return -1;
 }
